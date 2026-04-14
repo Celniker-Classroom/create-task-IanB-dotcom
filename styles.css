@@ -1,1 +1,99 @@
-/* Add Global styles here */
+/* Add Global styles here
+// Portfolio data
+let portfolio = [];
+
+// Add stock to portfolio
+function addStock(){
+    let ticker = document.getElementById("ticker").value.toUpperCase();
+    let shares = parseFloat(document.getElementById("shares").value);
+    let buyPrice = parseFloat(document.getElementById("buyPrice").value);
+    let currentPrice = parseFloat(document.getElementById("currentPrice").value);
+
+    // Input validation
+    if (ticker === "" || isNaN(shares) || isNaN(buyPrice) || isNaN(currentPrice)){
+        document.getElementById("msg").textContent = "Please fill in all fields correctly.";
+        return;
+    }
+
+    portfolio.push({ticker: ticker, shares: shares, buyPrice: buyPrice, currentPrice: currentPrice});
+    document.getElementById("msg").textContent = ticker + " added to portfolio.";
+    clearInputs();
+    displayPortfolio(portfolio);
+    analyzePortfolio(portfolio);
+}
+
+// Core function — sequencing, selection, iteration
+function analyzePortfolio(portfolioList){
+    let totalInvested = 0;
+    let totalValue = 0;
+
+    // iteration
+    for (let i = 0; i < portfolioList.length; i++){
+        // sequencing
+        totalInvested += portfolioList[i].shares * portfolioList[i].buyPrice;
+        totalValue += portfolioList[i].shares * portfolioList[i].currentPrice;
+    }
+
+    let gainLoss = totalValue - totalInvested;
+    let returnPercent = ((gainLoss / totalInvested) * 100).toFixed(2);
+
+    // selection
+    if (gainLoss > 0){
+        document.getElementById("result").textContent = "Portfolio up $" + gainLoss.toFixed(2) + " (" + returnPct + "%)";
+        document.getElementById("result").style.color = "green";
+    } else if (gainLoss < 0){
+        document.getElementById("result").textContent = "Portfolio down $" + Math.abs(gainLoss).toFixed(2) + " (" + returnPct + "%)";
+        document.getElementById("result").style.color = "red";
+    } else {
+        document.getElementById("result").textContent = "Portfolio is break even.";
+        document.getElementById("result").style.color = "black";
+    }
+
+    document.getElementById("totalInvested").textContent = "Total Invested: $" + totalInvested.toFixed(2);
+    document.getElementById("totalValue").textContent = "Current Value: $" + totalValue.toFixed(2);
+}
+
+// Display each stock in the list
+function displayPortfolio(portfolioList){
+    let display = document.getElementById("portfolioDisplay");
+    display.innerHTML = "";
+    for (let i = 0; i < portfolioList.length; i++){
+        let stock = portfolioList[i];
+        let perShareGain = stock.currentPrice - stock.buyPrice;
+        let totalGain = (perShareGain * stock.shares).toFixed(2);
+        let item = document.createElement("li");
+        item.textContent = stock.ticker
+            + " | Shares: " + stock.shares
+            + " | Buy: $" + stock.buyPrice
+            + " | Current: $" + stock.currentPrice
+            + " | Gain/Loss: $" + totalGain;
+        if (perShareGain >= 0){
+            item.style.color = "green";
+        } else {
+            item.style.color = "red";
+        }
+        display.appendChild(item);
+    }
+}
+
+// Clear input fields after adding
+function clearInputs(){
+    document.getElementById("ticker").value = "";
+    document.getElementById("shares").value = "";
+    document.getElementById("buyPrice").value = "";
+    document.getElementById("currentPrice").value = "";
+}
+
+// Clear entire portfolio
+function clearPortfolio(){
+    portfolio = [];
+    document.getElementById("portfolioDisplay").innerHTML = "";
+    document.getElementById("result").textContent = "";
+    document.getElementById("totalInvested").textContent = "";
+    document.getElementById("totalValue").textContent = "";
+    document.getElementById("msg").textContent = "Portfolio cleared.";
+}
+
+// Event listeners
+document.getElementById("addBtn").addEventListener("click", addStock);
+document.getElementById("clearBtn").addEventListener("click", clearPortfolio); */
