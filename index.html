@@ -1,13 +1,42 @@
+<!-- This project is a stock return tracker. The user inputs there holdings, 
+the price they bought the stock at and the current price. The code will 
+determine the total gain/loss from the investment, and how much money the 
+user owns -->
+
+<!-- Title -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Investment Portfolio Tracker</title>
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Your html goes here...</h1>
-    <br>See the <a href="README.md">README</a> for project details
+
+<h1>Investment Portfolio Tracker</h1>
+
+<!-- Segment where the user could input a stock, and a clear button / add stock button --> 
+
+<h3>Add a Stock</h3>
+    <input type="text" id="ticker" placeholder="Ticker (e.g. nvda)">
+    <input type="number" id="shares" placeholder="Shares">
+    <input type="number" id="buyPrice" placeholder="Buy Price">
+    <input type="number" id="currentPrice" placeholder="Current Price">
+    <button id="addBtn">Add Stock</button>
+    <button id="clearBtn">Clear Portfolio</button>
+
+<!-- stats with amount invested, return etc --> 
+    <p id="msg"></p>
+    <p id="totalInvested"></p>
+    <p id="totalValue"></p>
+    <p id="result"></p>
+
+    <!-- stock list -->
+    <ol id="portfolioDisplay"></ol>
+
 </body>
 </html>
+
+
