@@ -36,7 +36,7 @@ function displayPortfolio(portfolioList){
             + " | Buy: $" + portfolioList[i].buyPrice
             + " | Current: $" + portfolioList[i].currentPrice;
         display.appendChild(item);
-    }
+}
 }
 
 function clearInputs(){
@@ -60,7 +60,10 @@ if (ticker === "" || isNaN(buyPrice) || isNaN(currentPrice) || isNaN(shares)) {
 
 portfolio.push ({ticker: ticker, shares: shares, buyPrice: buyPrice, currentPrice: currentPrice});
 document.getElementById("msg").textContent = ticker + " was added to your portfolio.";
-clearInputs();
 displayPortfolio(portfolio);
 analyzePortfolio(portfolio);
 });
+
+document.getElementById("clearBtn").addEventListener ("click", function(){
+    clearInputs();
+})
