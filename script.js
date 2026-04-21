@@ -1,5 +1,3 @@
-let portfolio = [];
-
 function analyzePortfolio(portfolioList){
     let totalInvested = 0;
     let totalValue = 0;
@@ -46,6 +44,8 @@ function clearInputs(){
     document.getElementById("currentPrice").value = "";
 }
 
+let portfolio = [];
+
 document.getElementById("addBtn").addEventListener ("click", function() {
 
 let ticker = document.getElementById("ticker").value.toUpperCase();
@@ -67,3 +67,13 @@ analyzePortfolio(portfolio);
 document.getElementById("clearBtn").addEventListener ("click", function(){
     clearInputs();
 })
+
+document.getElementById("clearPortfolio").addEventListener("click", function() {
+  portfolio = [];
+  document.getElementById("portfolioDisplay").innerHTML = "";
+  document.getElementById("totalInvested").textContent = "";
+  document.getElementById("totalValue").textContent = "";
+  document.getElementById("result").textContent = "";
+  document.getElementById("msg").textContent = "Portfolio cleared.";
+  
+});
