@@ -62,6 +62,7 @@ portfolio.push ({ticker: ticker, shares: shares, buyPrice: buyPrice, currentPric
 document.getElementById("msg").textContent = ticker + " was added to your portfolio.";
 displayPortfolio(portfolio);
 analyzePortfolio(portfolio);
+updateChart(portfolio);
 });
 
 document.getElementById("clearBtn").addEventListener ("click", function(){
@@ -70,6 +71,7 @@ document.getElementById("clearBtn").addEventListener ("click", function(){
 
 document.getElementById("clearPortfolio").addEventListener("click", function() {
   portfolio = [];
+  if (chart) { chart.destroy(); chart = null; }
   document.getElementById("portfolioDisplay").innerHTML = "";
   document.getElementById("totalInvested").textContent = "";
   document.getElementById("totalValue").textContent = "";
@@ -77,3 +79,33 @@ document.getElementById("clearPortfolio").addEventListener("click", function() {
   document.getElementById("msg").textContent = "Portfolio cleared.";
   
 });
+
+let chart = null;
+
+function updateChart(portfolioList) {
+  let labels = portfolioList.map(stock => stock.ticker);
+  let values = portfolioList.map(stock => stock.shares * stock.currentPrice);
+  let colors = ["#d4a847", "#3fb950", "#58a6ff", "#f85149", "#bc8cff", "#ffa657"];
+
+  if (chart) {
+    chart.destroy();
+}
+
+  let ctx = document.getElementById("pieChart").getContext("2d");
+  chart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: labels,
+      datasets: [{
+        data: values,
+        backgroundColor: colors
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { position: "bottom" }
+      }
+    }
+  });
+}
+// 
