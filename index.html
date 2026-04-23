@@ -8,38 +8,39 @@ user owns -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Investment Portfolio Tracker</title>
-    <script src="script.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Investment Portfolio Tracker</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="layout">
 
-<h1>Investment Portfolio Tracker</h1>
+    <!-- LEFT: inputs and data -->
+    <div class="left-panel">
+      <h1>Investment Portfolio Tracker</h1>
+      <h3>Add a Stock</h3>
+      <input type="text" id="ticker" placeholder="Ticker (e.g. NVDA)">
+      <input type="number" id="shares" placeholder="Shares">
+      <input type="number" id="buyPrice" placeholder="Buy Price">
+      <input type="number" id="currentPrice" placeholder="Current Price">
+      <button id="addBtn">Add Stock</button>
+      <button id="clearBtn">Clear Input</button>
+      <button id="clearPortfolio">Clear Portfolio</button>
+      <p id="msg"></p>
+      <p id="totalInvested"></p>
+      <p id="totalValue"></p>
+      <p id="result"></p>
+      <ol id="portfolioDisplay"></ol>
+    </div>
 
-<!-- Segment where the user could input a stock, and a clear button / add stock button --> 
+    <!-- RIGHT: charts -->
+    <div class="right-panel">
+      <div class="chart-card"><canvas id="pieChart"></canvas></div>
+      <div class="chart-card"><canvas id="barChart"></canvas></div>
+    </div>
 
-<h3>Add a Stock</h3>
-    <input type="text" id="ticker" placeholder="Ticker (e.g. nvda)">
-    <input type="number" id="shares" placeholder="Shares">
-    <input type="number" id="buyPrice" placeholder="Buy Price">
-    <input type="number" id="currentPrice" placeholder="Current Price">
-    <button id="addBtn">Add Stock</button>
-    <button id="clearBtn">Clear Input</Input></button>
-    <button id="clearPortfolio">Clear Portfolio</Input></button>
-
-<!-- stats with amount invested, return etc --> 
-    <p id="msg"></p>
-    <p id="totalInvested"></p>
-    <p id="totalValue"></p>
-    <p id="result"></p>
-
-    <!-- stock list -->
-    <ol id="portfolioDisplay"></ol>
-    <canvas id="pieChart" width="400" height="400"></canvas>
-
+  </div>
 </body>
 </html>
-
-

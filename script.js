@@ -33,6 +33,10 @@ function displayPortfolio(portfolioList){
         item.textContent = portfolioList[i].ticker + " | Shares: " + portfolioList[i].shares
             + " | Buy: $" + portfolioList[i].buyPrice
             + " | Current: $" + portfolioList[i].currentPrice;
+        let stockReturn = ((portfolioList[i].currentPrice - portfolioList[i].buyPrice) / portfolioList[i].buyPrice * 100).toFixed(2);
+        let arrow = stockReturn >= 0 ? "▲" : "▼";
+        item.textContent += " | " + arrow + " " + Math.abs(stockReturn) + "%";
+        item.style.color = stockReturn >= 0 ? "green" : "red";
         display.appendChild(item);
 }
 }
@@ -45,6 +49,8 @@ function clearInputs(){
 }
 
 let portfolio = [];
+let pieChart = null;
+let barChart = null;
 
 document.getElementById("addBtn").addEventListener ("click", function() {
 
@@ -71,7 +77,8 @@ document.getElementById("clearBtn").addEventListener ("click", function(){
 
 document.getElementById("clearPortfolio").addEventListener("click", function() {
   portfolio = [];
-  if (chart) { chart.destroy(); chart = null; }
+  if (pieChart) { pieChart.destroy(); pieChart = null; }
+  if (barChart) { barChart.destroy(); barChart = null; }
   document.getElementById("portfolioDisplay").innerHTML = "";
   document.getElementById("totalInvested").textContent = "";
   document.getElementById("totalValue").textContent = "";
@@ -80,32 +87,56 @@ document.getElementById("clearPortfolio").addEventListener("click", function() {
   
 });
 
-let chart = null;
+// The pie chart and bar chart below was made with help from the inbuilt AI bot. The bot helped fix bugs are construct the general format. 
+// (Originally my pie chart didnt update the chart immediately and the bot helped fixed this. General structure for the bichart was aided by the ai).
 
 function updateChart(portfolioList) {
   let labels = portfolioList.map(stock => stock.ticker);
   let values = portfolioList.map(stock => stock.shares * stock.currentPrice);
   let colors = ["#d4a847", "#3fb950", "#58a6ff", "#f85149", "#bc8cff", "#ffa657"];
 
-  if (chart) {
-    chart.destroy();
-}
+  const pieCtx = document.getElementById("pieChart").getContext("2d");
+  const barCtx = document.getElementById("barChart").getContext("2d");
 
-  let ctx = document.getElementById("pieChart").getContext("2d");
-  chart = new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: labels,
-      datasets: [{
-        data: values,
-        backgroundColor: colors
-      }]
-    },
-    options: {
-      plugins: {
-        legend: { position: "bottom" }
+  if (pieChart) {
+    pieChart.data.labels = labels;
+    pieChart.data.datasets[0].data = values;
+    pieChart.data.datasets[0].backgroundColor = colors.slice(0, values.length);
+    pieChart.update();
+  } else {
+    pieChart = new Chart(pieCtx, {
+      type: "pie",
+      data: {
+        labels,
+        datasets: [{
+          data: values,
+          backgroundColor: colors.slice(0, values.length)
+        }]
+      },
+      options: { plugins: { legend: { position: "bottom" } } }
+    });
+  }
+
+  if (barChart) {
+    barChart.data.labels = labels;
+    barChart.data.datasets[0].data = values;
+    barChart.update();
+  } else {
+    barChart = new Chart(barCtx, {
+      type: "bar",
+      data: {
+        labels,
+        datasets: [{
+          label: "Market Value",
+          data: values,
+          backgroundColor: colors.slice(0, values.length)
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true }
+        }
       }
-    }
-  });
+    });
+  }
 }
-// 
