@@ -23,6 +23,7 @@ function analyzePortfolio(portfolioList){
 }
     document.getElementById("totalInvested").textContent = "Total Invested: $" + totalInvested.toFixed(2);
     document.getElementById("totalValue").textContent = "Current Value: $" + totalValue.toFixed(2);
+    updateSummary(portfolioList, gainLoss, totalValue);
 };
 
 function displayPortfolio(portfolioList){
@@ -84,7 +85,7 @@ document.getElementById("clearPortfolio").addEventListener("click", function() {
   document.getElementById("totalValue").textContent = "";
   document.getElementById("result").textContent = "";
   document.getElementById("msg").textContent = "Portfolio cleared.";
-  
+    document.getElementById("summary").style.display = "none";
 });
 
 // The pie chart and bar chart below was made with help from the inbuilt AI bot. The bot helped fix bugs are construct the general format. 
@@ -139,4 +140,56 @@ function updateChart(portfolioList) {
       }
     });
   }
+}
+
+function updateSummary(portfolioList, gainLoss, totalValue) {
+  const card = document.getElementById("summary");
+  if (portfolioList.length === 0) { card.style.display = "none"; return; }
+
+  const count = portfolioList.length;
+
+  let diversification;
+  if (count >= 7) {
+    diversification = "well diversified";
+  } else if (count >= 4) {
+    diversification = "moderately diversified";
+  } else {
+    diversification = "concentrated"; }
+
+  let size;
+  if (totalValue >= 100000) {
+    size = "large";
+  } else if (totalValue >= 25000) {
+    size = "mid-size";
+  } else {
+    size = "small";
+  }
+
+  const bias = portfolioList.filter(s => ((s.currentPrice - s.buyPrice) / s.buyPrice) > 0.15).length;
+
+  let growthLabel;
+  if (bias >= Math.ceil(count / 2)) {
+    growthLabel = "growth-oriented";
+  } else {
+    growthLabel = "value-oriented";
+  }
+
+  let pluralHolding;
+  if (count > 1) {
+    pluralHolding = "holdings";
+  } else {
+    pluralHolding = "holding";
+  }
+
+  let gainPrefix;
+  if (gainLoss >= 0) {
+    gainPrefix = "+$";
+  } else {
+    gainPrefix = "-$";
+  }
+
+  document.getElementById("sumCount").textContent = count + " " + pluralHolding + " — " + diversification + ", " + growthLabel + ".";
+  document.getElementById("sumSize").textContent = "Portfolio size: " + size + " ($" + totalValue.toFixed(2) + " market value).";
+  document.getElementById("sumGain").textContent = "Net P&L: " + gainPrefix + Math.abs(gainLoss).toFixed(2);
+  card.style.display = "block";
 }

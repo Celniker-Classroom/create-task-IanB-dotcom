@@ -11,7 +11,6 @@
   --muted: #7d8590;
 }
 
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -76,7 +75,11 @@ input {
   outline: none;
   width: 46%;
 }
-input:focus { border-color: var(--gold); }
+
+input:focus {
+  border-color: var(--gold);
+}
+
 button {
   font-family: 'DM Mono', monospace;
   font-size: 0.82rem;
@@ -91,7 +94,9 @@ button {
   border: 1px solid var(--gold);
 }
 
-button:hover { opacity: 0.8; }
+button:hover {
+  opacity: 0.8;
+}
 
 #clearBtn, #clearPortfolio {
   background: var(--surface);
@@ -106,7 +111,10 @@ button:hover { opacity: 0.8; }
   margin-top: 8px;
 }
 
-#result { font-size: 1rem; font-weight: 600; }
+#result {
+  font-size: 1rem;
+  font-weight: 600;
+}
 
 #portfolioDisplay {
   list-style: none;
@@ -125,13 +133,11 @@ button:hover { opacity: 0.8; }
   background: var(--surface);
 }
 
-On some of the css I used AI to add finishing touches which make the styling better
-
-.chart-card {
+.card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 20px;
 }
 
-
+/* On some areas in this code, I used AI to improve the graphical appearance, such as adding transition: opacity */
